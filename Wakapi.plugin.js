@@ -72,7 +72,7 @@ class Wakapi {
                 project: "Tickets",
                 language: "Tickets",
                 editor: "Discord",
-                is_write: false,
+                is_write: true,
                 machine: machine,
                 operating_system: system,
                 time: time
@@ -82,9 +82,11 @@ class Wakapi {
         const headersOpt = {
             "content-type": "application/json",
             "X-Machine-Name": machine,
-            "User-Agent": `Discord (${machine})`,
+            "User-Agent": `wakatime/13.0.4 (${system}) BetterDiscord Discord-wakatime/1.0.2`,
             "Authorization": `Basic ${Buffer.from(this.getApiKey()).toString('base64')}`,
         };
+
+        console.log(headersOpt)
         const options = {
             uri: this.getRequestURL() + this.getApiKey(),
             method: 'POST',
