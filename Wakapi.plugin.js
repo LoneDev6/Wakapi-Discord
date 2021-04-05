@@ -97,7 +97,7 @@ class Wakapi {
         const headersOpt = {
             "content-type": "application/json",
             "X-Machine-Name": machine,
-            "User-Agent": `wakatime/13.0.4 (${system}) BetterDiscord Discord-wakatime/1.0.2`,
+            "User-Agent": `wakatime/1.0.0 (${system}-idk) Discord/1.0.0 Discord-wakatime/1.0.0`,
             "Authorization": `Basic ${Buffer.from(this.getApiKey()).toString('base64')}`,
         };
 
