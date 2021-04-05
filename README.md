@@ -1,5 +1,5 @@
 # Wakapi-Discord
-[Wakapi](https://github.com/muety/wakapi) integration in the [BetterDiscord](https://github.com/rauenzi/BetterDiscordApp) client. Enables you to track the time you spend giving answering support tickets.
+[Wakapi](https://github.com/muety/wakapi) integration in the [BetterDiscord](https://github.com/rauenzi/BetterDiscordApp) client. Enables you to track the time you spend answering support tickets.
 
 Time spent in support tickets will be logged under the language _"Tickets"_.
 
