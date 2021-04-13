@@ -43,8 +43,8 @@ class Wakapi {
 
         let trySendHeartbeat_hack = () => this.trySendHeartbeat()
 
-        window.setInterval(function(){
-            if(focussed)
+        window.setInterval(function () {
+            if (focussed)
                 trySendHeartbeat_hack()
         }, 100000);//100 seconds
     }
@@ -67,9 +67,8 @@ class Wakapi {
         const category = ZeresPluginLibrary.DiscordAPI.currentChannel.category;
         if (category == null || category == undefined)
             return;
-        if (!category.discordObject.name.includes("tickets")) {
+        if (!category.discordObject.name.includes("tickets") || !category.discordObject.name.includes("support"))
             return;
-        }
 
         const request = require("request");
         const os = require("os");
