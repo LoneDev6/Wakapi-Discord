@@ -2,10 +2,6 @@ module.exports = (Plugin, Library) => {
   const { Logger } = Library;
 
   return class Wakapi extends Plugin {
-    getApiKey = () => this.settings.wakapi.apikey;
-
-    getRequestURL = () => this.settings.wakapi.apiurl;
-
     onStart() {
       if (this.settings.enabled === false) return;
       if (this.settings.wakapi.apikey === "")
@@ -47,6 +43,7 @@ module.exports = (Plugin, Library) => {
 
     trySendHeartbeat() {
       if (this.settings.enabled !== true) return;
+      if (this.settings.wakapi.apikey === "") return;
       // if the user supplied no guild and no categoy names we can assume they dont want to track anything
       if (
         this.settings.discord.trackingguilds === "" ||
@@ -112,13 +109,13 @@ module.exports = (Plugin, Library) => {
         "content-type": "application/json",
         "X-Machine-Name": machine,
         "User-Agent": `wakatime/1.0.0 (${system}-idk) Discord/1.0.0 Discord-wakatime/1.0.0`,
-        Authorization: `Basic ${Buffer.from(this.getApiKey()).toString(
-          "base64"
-        )}`,
+        Authorization: `Basic ${Buffer.from(
+          this.settings.wakapi.apikey
+        ).toString("base64")}`,
       };
 
       const options = {
-        uri: this.getRequestURL() + this.getApiKey(),
+        uri: this.settings.wakapi.apiurl + this.settings.wakapi.apikey,
         method: "POST",
         headers: headersOpt,
         json: obj,
