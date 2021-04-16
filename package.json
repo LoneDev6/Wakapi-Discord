@@ -1,6 +1,6 @@
 {
   "name": "wakapi_discord",
-  "version": "1.0.0",
+  "version": "0.0.2",
   "description": "[Wakapi](https://github.com/muety/wakapi) integration in the [BetterDiscord](https://github.com/rauenzi/BetterDiscordApp) client. Enables you to track the time you spend answering support tickets.",
   "main": "config.js",
   "scripts": {
