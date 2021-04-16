@@ -1,0 +1,22 @@
+{
+  "name": "wakapi_discord",
+  "version": "1.0.0",
+  "description": "[Wakapi](https://github.com/muety/wakapi) integration in the [BetterDiscord](https://github.com/rauenzi/BetterDiscordApp) client. Enables you to track the time you spend answering support tickets.",
+  "main": "config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev:init": "git clone https://github.com/rauenzi/BDPluginLibrary.git && cp config.json ./BDPluginLibrary",
+    "dev:build": "node ./BDPluginLibrary/scripts/build.js local Wakapi"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LoneDev6/Wakapi-Discord.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LoneDev6/Wakapi-Discord/issues"
+  },
+  "homepage": "https://github.com/LoneDev6/Wakapi-Discord#readme"
+}
