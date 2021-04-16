@@ -147,18 +147,18 @@ module.exports = (() => {
       const system = os.type().replace("_NT", "");
       const time = Math.round(Date.now() / 1000);
 
-      const obj = [
+      const heartbeat_obj = [
         {
           entity: "Tickets",
           type: "Tickets",
           category: "Tickets",
-          project,
           language: "Tickets",
           editor: "Discord",
           is_write: true,
           machine: machine,
           operating_system: system,
-          time: time,
+          project,
+          time,
         },
       ];
 
@@ -172,24 +172,10 @@ module.exports = (() => {
       };
 
       const options = {
-        uri:
-          this.settings.wakapi.apiurl +
-          "?access_token=" +
-          this.settings.wakapi.apikey,
+        uri: this.settings.wakapi.apiurl + this.settings.wakapi.apikey,
         method: "POST",
         headers: headersOpt,
-        json: {
-          entity: "Tickets",
-          type: "Tickets",
-          time,
-          category: "Tickets",
-          project,
-          language: "Tickets",
-          editor: "Discord",
-          is_write: true,
-          machine: machine,
-          operating_system: system,
-        },
+        json: heartbeat_obj,
       };
 
       request(options, (e, r, b) => {
