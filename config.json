@@ -2,5 +2,5 @@
   "pluginsFolder": "../plugins",
   "releaseFolder": "../release",
   "addInstallScript": true,
-  "copyToBD": false
+  "copyToBD": true
 }
