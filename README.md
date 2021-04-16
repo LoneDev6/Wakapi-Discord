@@ -6,15 +6,17 @@ Time spent in support tickets will be logged under the language _"Tickets"_.
 ## Installation
 
 - Copy plugin the plugins folder of BetterDiscord.
-- Open up the js file and change the URL to match your server address and port and add your API Key to the end of the `getRequestURL()` string.
 - Customize the plugin based on your needs (if needed)
 - Open Discord and view any of the opened tickets.
+
+## Configuration
+
 
 ## Development
 
 - Clone the repository
 ```console
-git clone
+git clone https://github.com/LoneDev6/Wakapi-Discord.git
 ```
 
 - Initialize your dev environment

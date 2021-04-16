@@ -53,6 +53,12 @@ module.exports = (Plugin, Library) => {
         this.settings.discord.categories === ""
       )
         return;
+      // dm channel
+      if (
+        ZeresPluginLibrary.DiscordAPI.currentGuild === null ||
+        ZeresPluginLibrary.DiscordAPI.currentGuild === undefined
+      )
+        return;
       let project = "Tickets";
       const category = ZeresPluginLibrary.DiscordAPI.currentChannel.category;
       const guild_id = ZeresPluginLibrary.DiscordAPI.currentGuild.id;

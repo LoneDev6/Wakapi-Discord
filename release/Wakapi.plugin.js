@@ -4,8 +4,8 @@
  * @authorLink undefined
  * @donate undefined
  * @patreon undefined
- * @website https://raw.githubusercontent.com/LoneDev6/Wakapi-Discord/main/Wakapi.plugin.js
- * @source https://raw.githubusercontent.com/LoneDev6/Wakapi-Discord/main/Wakapi.plugin.js
+ * @website https://github.com/LoneDev6/Wakapi-Discord#readme
+ * @source https://raw.githubusercontent.com/LoneDev6/Wakapi-Discord/main/release/Wakapi.plugin.js
  */
 /*@cc_on
 @if (@_jscript)
@@ -32,7 +32,7 @@
 @else@*/
 
 module.exports = (() => {
-    const config = {"main":"index.js","info":{"name":"Wakapi","authors":[{"name":"LoneDev","discord_id":"","github_username":"LoneDev6","twitter_username":"LoneDev6"},{"name":"MeerBiene","discord_id":"686669011601326281","github_username":"MeerBiene"}],"version":"0.1.1","description":"Enables Wakapi time tracking of time spent in support channels.","github":"https://raw.githubusercontent.com/LoneDev6/Wakapi-Discord/main/Wakapi.plugin.js","github_raw":"https://raw.githubusercontent.com/LoneDev6/Wakapi-Discord/main/Wakapi.plugin.js"},"changelog":[{"title":"Settings","items":["added general settings","added discord settings to enable what channel names on which guilds are tracked"]},{"title":"Tracking on other guilds","type":"fixed","items":["Fixed bug where the plugin tracked time spent in support channels on other guilds"]}],"defaultConfig":[{"type":"switch","id":"enabled","name":"Tracking Enabled","value":true},{"type":"category","id":"wakapi","name":"Wakapi Settings","collapsible":true,"shown":false,"settings":[{"type":"textbox","id":"apikey","name":"Wakapi API Key","note":"API Key needed to interact with Wakapi","value":""},{"type":"textbox","id":"apiurl","name":"Wakapi Url","note":"API Url where your Wakapi instance lives","value":"https://wakapi.dev/api/heartbeat"},{"type":"slider","id":"samplerate","name":"Sample Rate","note":"Send a heartbeat every ... seconds","value":90,"min":30,"max":240,"markers":[30,60,90,120,150,180,210,240],"stickToMarkers":true}]},{"type":"category","id":"discord","name":"Discord Settings","collapsible":true,"shown":false,"settings":[{"type":"textbox","id":"trackingguilds","name":"Tracking Guilds","note":"The guild(s) in which you want to track your time. IDs! For multiple guilds, just seperate the guild IDs by comma. If left empty the plugin tracks the time on all guilds.","placeholder":"1234567891011, 1110987654321","value":""},{"type":"textbox","id":"categories","name":"Category Names","note":"Put the category names that indicate a support category and trigger the time tracking action here. For more than one just seperate them by comma.","value":"tickets, support"},{"type":"textbox","id":"projectmapping","name":"Project Mapping","note":"If you want to map the tracked guilds to a certain project, put them in here like so: {GUILID} => {PROJECTNAME}. If left empty, the project shown in wakapi will be \"tickets\".","placeholder":"1234567891011 => ExampleProject, 1110987654321 => ProjectExample","value":""}]}]};
+    const config = {"main":"index.js","info":{"name":"Wakapi","authors":[{"name":"LoneDev","discord_id":"","github_username":"LoneDev6","twitter_username":"LoneDev6"},{"name":"MeerBiene","discord_id":"686669011601326281","github_username":"MeerBiene"}],"version":"0.0.2","description":"Enables Wakapi time tracking of time spent in support channels.","github":"https://github.com/LoneDev6/Wakapi-Discord#readme","github_raw":"https://raw.githubusercontent.com/LoneDev6/Wakapi-Discord/main/release/Wakapi.plugin.js"},"changelog":[{"title":"Settings","items":["added general settings","added discord settings to enable what channel names on which guilds are tracked"]},{"title":"Tracking on other guilds","type":"fixed","items":["Fixed bug where the plugin tracked time spent in support channels on other guilds"]}],"defaultConfig":[{"type":"switch","id":"enabled","name":"Tracking Enabled","value":true},{"type":"category","id":"wakapi","name":"Wakapi Settings","collapsible":true,"shown":false,"settings":[{"type":"textbox","id":"apikey","name":"Wakapi API Key","note":"API Key needed to interact with Wakapi","value":""},{"type":"textbox","id":"apiurl","name":"Wakapi Url","note":"API Url where your Wakapi instance lives","value":"https://wakapi.dev/api/heartbeat"},{"type":"slider","id":"samplerate","name":"Sample Rate","note":"Send a heartbeat every ... seconds","value":90,"min":30,"max":240,"markers":[30,60,90,120,150,180,210,240],"stickToMarkers":true}]},{"type":"category","id":"discord","name":"Discord Settings","collapsible":true,"shown":false,"settings":[{"type":"textbox","id":"trackingguilds","name":"Tracking Guilds","note":"The guild(s) in which you want to track your time. IDs! For multiple guilds, just seperate the guild IDs by comma. If left empty the plugin tracks the time on all guilds.","placeholder":"1234567891011, 1110987654321","value":""},{"type":"textbox","id":"categories","name":"Category Names","note":"Put the category names that indicate a support category and trigger the time tracking action here. For more than one just seperate them by comma.","value":"tickets, support"},{"type":"textbox","id":"projectmapping","name":"Project Mapping","note":"If you want to map the tracked guilds to a certain project, put them in here like so: {GUILID} => {PROJECTNAME}. If left empty, the project shown in wakapi will be \"tickets\".","placeholder":"1234567891011 => ExampleProject, 1110987654321 => ProjectExample","value":""}]}]};
 
     return !global.ZeresPluginLibrary ? class {
         constructor() {this._config = config;}
@@ -56,7 +56,7 @@ module.exports = (() => {
         stop() {}
     } : (([Plugin, Api]) => {
         const plugin = (Plugin, Library) => {
-  const { Logger, Patcher } = Library;
+  const { Logger } = Library;
 
   return class Wakapi extends Plugin {
     getApiKey = () => this.settings.wakapi.apikey;
@@ -64,7 +64,6 @@ module.exports = (() => {
     getRequestURL = () => this.settings.wakapi.apiurl;
 
     onStart() {
-      console.log(this.settings);
       if (this.settings.enabled === false) return;
       if (this.settings.wakapi.apikey === "")
         return window.BdApi.alert(
@@ -111,6 +110,12 @@ module.exports = (() => {
         this.settings.discord.categories === ""
       )
         return;
+      // dm channel
+      if (
+        ZeresPluginLibrary.DiscordAPI.currentGuild === null ||
+        ZeresPluginLibrary.DiscordAPI.currentGuild === undefined
+      )
+        return;
       let project = "Tickets";
       const category = ZeresPluginLibrary.DiscordAPI.currentChannel.category;
       const guild_id = ZeresPluginLibrary.DiscordAPI.currentGuild.id;
@@ -130,13 +135,12 @@ module.exports = (() => {
         let projects = this.settings.discord.projectmapping.includes(",")
           ? this.settings.discord.projectmapping.split(",")
           : [this.settings.discord.projectmapping];
-        console.log(projects);
+
         projects.forEach((p) => {
           let mapped = p.split("=>");
           if (mapped[0].trim() === guild_id) project = mapped[1].trim();
         });
       }
-      console.log("aa");
 
       const request = require("request");
       const os = require("os");
@@ -178,28 +182,18 @@ module.exports = (() => {
       };
 
       request(options, (e, r, b) => {
-        if (!e && b && r.statusCode == 201) {
+        if (!e && b && r.statusCode === 201) {
           Logger.log("Sent ticket activity");
         } else {
           window.BdApi.alert("Error", "Wakapi error: " + e + " | " + b);
-          Logger.log(e);
-          Logger.log(b);
+          Logger.err(e);
+          Logger.err(b);
         }
       });
     }
 
     getSettingsPanel() {
       const panel = this.buildSettingsPanel();
-      // panel.append(
-      //   this.buildSetting({
-      //     type: "switch",
-      //     id: "otherOverride",
-      //     name: "A second override?!",
-      //     note: "wtf is happening here",
-      //     value: true,
-      //     onChange: (value) => (this.settings["otherOverride"] = value),
-      //   })
-      // );
       return panel.getElement();
     }
   };
