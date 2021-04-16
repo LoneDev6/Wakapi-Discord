@@ -108,7 +108,7 @@ class Wakapi {
         };
 
         request(options, (e, r, b) => {
-            if (!e && b && r.statusCode == 201) {
+            if (!e && b && r.statusCode === 201) {
                 console.log("Sent ticket activity")
             } else {
                 window.BdApi.alert("Error", "Wakapi error: " + e + " | " + b);
