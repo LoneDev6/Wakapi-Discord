@@ -1,0 +1,5 @@
+{
+  "pluginsFolder": "../plugins",
+  "releaseFolder": "../release",
+  "addInstallScript": true
+}
