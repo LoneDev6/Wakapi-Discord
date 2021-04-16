@@ -1,4 +1,6 @@
 # Wakapi-Discord
+<img src="https://shields.io/endpoint?url=https://wakapi.stlf.me/api/compat/shields/v1/meerbiene/interval:any/project:Wakapi-Discord&color=blue&label=Coding%20Time">
+
 [Wakapi](https://github.com/muety/wakapi) integration in the [BetterDiscord](https://github.com/rauenzi/BetterDiscordApp) client. Enables you to track the time you spend answering support tickets.
 
 Time spent in support tickets will be logged under the language _"Tickets"_.
