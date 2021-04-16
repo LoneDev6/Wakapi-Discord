@@ -24,9 +24,8 @@ jobs:
         run: "npm run dev:build"
       - name: Commit Changes
         uses: EndBug/add-and-commit@v7
-          with:
-            author_name: github-actions
-            author_email: 41898282+github-actions[bot]@users.noreply.github.com
-            message: 'ci (release): build plugin'
-            add: '*.js'
-
+        with:
+          author_name: github-actions
+          author_email: 41898282+github-actions[bot]@users.noreply.github.com
+          message: "ci (release): build plugin"
+          add: "*.js"
