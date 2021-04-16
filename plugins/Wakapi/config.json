@@ -22,6 +22,10 @@
   },
   "changelog": [
     {
+      "title": "Sample Rate",
+      "items": ["add smaple rate setting for less network usage"]
+    },
+    {
       "title": "Settings",
       "items": [
         "added general settings",
