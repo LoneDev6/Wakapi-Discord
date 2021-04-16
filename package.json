@@ -10,13 +10,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/MeerBiene/Wakapi-Discord.git"
+    "url": "git+https://github.com/LoneDev6/Wakapi-Discord.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/MeerBiene/Wakapi-Discord/issues"
+    "url": "https://github.com/LoneDev6/Wakapi-Discord/issues"
   },
-  "homepage": "https://github.com/MeerBiene/Wakapi-Discord#readme"
+  "homepage": "https://github.com/LoneDev6/Wakapi-Discord#readme"
 }

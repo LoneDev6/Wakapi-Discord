@@ -7,7 +7,6 @@ module.exports = (Plugin, Library) => {
     getRequestURL = () => this.settings.wakapi.apiurl;
 
     onStart() {
-      console.log(this.settings);
       if (this.settings.enabled === false) return;
       if (this.settings.wakapi.apikey === "")
         return window.BdApi.alert(
@@ -120,7 +119,7 @@ module.exports = (Plugin, Library) => {
       };
 
       request(options, (e, r, b) => {
-        if (!e && b && r.statusCode == 201) {
+        if (!e && b && r.statusCode === 201) {
           Logger.log("Sent ticket activity");
         } else {
           window.BdApi.alert("Error", "Wakapi error: " + e + " | " + b);
