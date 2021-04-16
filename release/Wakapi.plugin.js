@@ -172,17 +172,35 @@ module.exports = (() => {
       };
 
       const options = {
-        uri: this.settings.wakapi.apiurl + this.settings.wakapi.apikey,
+        uri:
+          this.settings.wakapi.apiurl +
+          "?access_token=" +
+          this.settings.wakapi.apikey,
         method: "POST",
         headers: headersOpt,
-        json: obj,
+        json: {
+          entity: "Tickets",
+          type: "Tickets",
+          time,
+          category: "Tickets",
+          project,
+          language: "Tickets",
+          editor: "Discord",
+          is_write: true,
+          machine: machine,
+          operating_system: system,
+        },
       };
 
       request(options, (e, r, b) => {
         if (!e && b && r.statusCode === 201) {
           Logger.log("Sent ticket activity");
         } else {
-          window.BdApi.alert("Error", "Wakapi error: " + e + " | " + b);
+          window.BdApi.alert(
+            "Error",
+            "Wakapi error: " + b.toString() + " | " + e.toString()
+          );
+          Logger.err(r);
           Logger.err(e);
           Logger.err(b);
         }

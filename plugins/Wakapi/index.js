@@ -90,18 +90,18 @@ module.exports = (Plugin, Library) => {
       const system = os.type().replace("_NT", "");
       const time = Math.round(Date.now() / 1000);
 
-      const obj = [
+      const heartbeat_obj = [
         {
           entity: "Tickets",
           type: "Tickets",
           category: "Tickets",
-          project,
           language: "Tickets",
           editor: "Discord",
           is_write: true,
           machine: machine,
           operating_system: system,
-          time: time,
+          project,
+          time,
         },
       ];
 
@@ -118,14 +118,18 @@ module.exports = (Plugin, Library) => {
         uri: this.settings.wakapi.apiurl + this.settings.wakapi.apikey,
         method: "POST",
         headers: headersOpt,
-        json: obj,
+        json: heartbeat_obj,
       };
 
       request(options, (e, r, b) => {
         if (!e && b && r.statusCode === 201) {
           Logger.log("Sent ticket activity");
         } else {
-          window.BdApi.alert("Error", "Wakapi error: " + e + " | " + b);
+          window.BdApi.alert(
+            "Error",
+            "Wakapi error: " + b.toString() + " | " + e.toString()
+          );
+          Logger.err(r);
           Logger.err(e);
           Logger.err(b);
         }
