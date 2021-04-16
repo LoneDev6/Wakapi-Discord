@@ -4,8 +4,8 @@
  * @authorLink undefined
  * @donate undefined
  * @patreon undefined
- * @website 
- * @source 
+ * @website https://raw.githubusercontent.com/LoneDev6/Wakapi-Discord/main/Wakapi.plugin.js
+ * @source https://raw.githubusercontent.com/LoneDev6/Wakapi-Discord/main/Wakapi.plugin.js
  */
 /*@cc_on
 @if (@_jscript)
@@ -32,7 +32,7 @@
 @else@*/
 
 module.exports = (() => {
-    const config = {"main":"index.js","info":{"name":"Wakapi","authors":[{"name":"Zerebos","discord_id":"249746236008169473","github_username":"rauenzi","twitter_username":"ZackRauen"}],"version":"0.1.0","description":"Config Settings","github":"","github_raw":""},"changelog":[{"title":"New Stuff","items":["Added more settings","Added changelog"]},{"title":"Bugs Squashed","type":"fixed","items":["React errors on reload"]},{"title":"Improvements","type":"improved","items":["Improvements to the base plugin"]},{"title":"On-going","type":"progress","items":["More modals and popouts being added","More classes and modules being added"]}],"defaultConfig":[{"type":"switch","id":"grandOverride","name":"Main Override","note":"This could be a global override or something idk","value":false},{"type":"category","id":"basic","name":"Basic Settings","collapsible":true,"shown":false,"settings":[{"type":"textbox","id":"textbox","name":"Basic Textbox","note":"Description of the textbox setting","value":"nothing","placeholder":""},{"type":"dropdown","id":"dropdown","name":"Select","note":"You have choices for now","value":"weiner","options":[{"label":"Test 1","value":"weiner"},{"label":"Test 2","value":50},{"label":"Test 3","value":"{label: \"Test 1\", value: \"weiner\"})"}]},{"type":"radio","id":"radio","name":"Smol Choices","note":"You have less choices now","value":50,"options":[{"name":"Test 1","value":"weiner","desc":"This is the first test","color":"#ff0000"},{"name":"Test 2","value":50,"desc":"This is the second test","color":"#00ff00"},{"name":"Test 3","value":"{label: \"Test 1\", value: \"weiner\"})","desc":"This is the third test","color":"#0000ff"}]},{"type":"switch","id":"switch1","name":"A Switch","note":"This could be a boolean","value":false},{"type":"switch","id":"switch2","name":"Anotha one","note":"This could be a boolean2","value":true},{"type":"switch","id":"switch3","name":"Anotha one two","note":"This could be a boolean3","value":true},{"type":"switch","id":"switch4","name":"Anotha one too","note":"This could be a boolean4","value":false}]},{"type":"category","id":"advanced","name":"Advanced Settings","collapsible":true,"shown":false,"settings":[{"type":"color","id":"color","name":"Example Color","note":"Color up your life","value":"#ff0000"},{"type":"keybind","id":"keys","name":"DJ Khaled","note":"I got them keys keys keys","value":[162,74]},{"type":"slider","id":"slider1","name":"Electric Slide","note":"Down down do your thang do your thang","value":30,"min":0,"max":100},{"type":"slider","id":"slider2","name":"Marker Slide","note":"Preset markers example","value":54,"min":0,"max":90,"markers":[0,9,18,27,36,45,54,63,72,81,90],"stickToMarkers":true},{"type":"file","id":"fileObj","name":"File To Upload","note":"This setting type needs a rewrite..."}]}]};
+    const config = {"main":"index.js","info":{"name":"Wakapi","authors":[{"name":"LoneDev","discord_id":"","github_username":"LoneDev6","twitter_username":"LoneDev6"},{"name":"MeerBiene","discord_id":"686669011601326281","github_username":"MeerBiene"}],"version":"0.1.1","description":"Enables Wakapi time tracking of time spent in support channels.","github":"https://raw.githubusercontent.com/LoneDev6/Wakapi-Discord/main/Wakapi.plugin.js","github_raw":"https://raw.githubusercontent.com/LoneDev6/Wakapi-Discord/main/Wakapi.plugin.js"},"changelog":[{"title":"Settings","items":["added general settings","added discord settings to enable what channel names on which guilds are tracked"]},{"title":"Tracking on other guilds","type":"fixed","items":["Fixed bug where the plugin tracked time spent in support channels on other guilds"]}],"defaultConfig":[{"type":"switch","id":"enabled","name":"Tracking Enabled","value":true},{"type":"category","id":"wakapi","name":"Wakapi Settings","collapsible":true,"shown":false,"settings":[{"type":"textbox","id":"apikey","name":"Wakapi API Key","note":"API Key needed to interact with Wakapi","value":""},{"type":"textbox","id":"apiurl","name":"Wakapi Url","note":"API Url where your Wakapi instance lives","value":"https://wakapi.dev/api/heartbeat"},{"type":"slider","id":"samplerate","name":"Sample Rate","note":"Send a heartbeat every ... seconds","value":90,"min":30,"max":240,"markers":[30,60,90,120,150,180,210,240],"stickToMarkers":true}]},{"type":"category","id":"discord","name":"Discord Settings","collapsible":true,"shown":false,"settings":[{"type":"textbox","id":"trackingguilds","name":"Tracking Guilds","note":"The guild(s) in which you want to track your time. IDs! For multiple guilds, just seperate the guild IDs by comma. If left empty the plugin tracks the time on all guilds.","placeholder":"1234567891011, 1110987654321","value":""},{"type":"textbox","id":"categories","name":"Category Names","note":"Put the category names that indicate a support category and trigger the time tracking action here. For more than one just seperate them by comma.","value":"tickets, support"},{"type":"textbox","id":"projectmapping","name":"Project Mapping","note":"If you want to map the tracked guilds to a certain project, put them in here like so: {GUILID} => {PROJECTNAME}. If left empty, the project shown in wakapi will be \"tickets\".","placeholder":"1234567891011 => ExampleProject, 1110987654321 => ProjectExample","value":""}]}]};
 
     return !global.ZeresPluginLibrary ? class {
         constructor() {this._config = config;}
@@ -59,30 +59,147 @@ module.exports = (() => {
   const { Logger, Patcher } = Library;
 
   return class Wakapi extends Plugin {
+    getApiKey = () => this.settings.wakapi.apikey;
+
+    getRequestURL = () => this.settings.wakapi.apiurl;
+
     onStart() {
+      console.log(this.settings);
+      if (this.settings.enabled === false) return;
+      if (this.settings.wakapi.apikey === "")
+        return window.BdApi.alert(
+          "No Waka API key found! Place your api key in the settings menu of this plugin in order for the plugin to work."
+        );
       Logger.log("Started");
-      Patcher.before(Logger, "log", (t, a) => {
-        a[0] = "Patched Message: " + a[0];
-      });
+      let focussed = true;
+      this.focus = () => {
+        this.trySendHeartbeat();
+        focussed = true;
+      };
+      this.unfocus = () => {
+        focussed = false;
+      };
+      window.addEventListener("focus", this.focus);
+      window.addEventListener("blur", this.unfocus);
+
+      let trySendHeartbeat_hack = () => this.trySendHeartbeat();
+
+      window.setInterval(function () {
+        if (focussed) trySendHeartbeat_hack();
+      }, this.settings.wakapi.samplerate * 1000);
     }
 
     onStop() {
       Logger.log("Stopped");
-      Patcher.unpatchAll();
+      window.removeEventListener("focus", this.focus);
+      window.removeEventListener("blur", this.unfocus);
+    }
+
+    onMessage() {
+      this.trySendHeartbeat();
+    }
+
+    onSwitch() {
+      this.trySendHeartbeat();
+    }
+
+    trySendHeartbeat() {
+      if (this.settings.enabled !== true) return;
+      // if the user supplied no guild and no categoy names we can assume they dont want to track anything
+      if (
+        this.settings.discord.trackingguilds === "" ||
+        this.settings.discord.categories === ""
+      )
+        return;
+      let project = "Tickets";
+      const category = ZeresPluginLibrary.DiscordAPI.currentChannel.category;
+      const guild_id = ZeresPluginLibrary.DiscordAPI.currentGuild.id;
+      const allowed_categories = this.settings.discord.categories;
+
+      if (category === null || category === undefined) return;
+      // guild check
+      if (!this.settings.discord.trackingguilds.includes(guild_id)) return;
+      // category check
+      if (!allowed_categories.includes(category.discordObject.name)) return;
+
+      // projectmapping
+      if (
+        this.settings.discord.projectmapping !== "" &&
+        this.settings.discord.projectmapping.includes(guild_id)
+      ) {
+        let projects = this.settings.discord.projectmapping.includes(",")
+          ? this.settings.discord.projectmapping.split(",")
+          : [this.settings.discord.projectmapping];
+        console.log(projects);
+        projects.forEach((p) => {
+          let mapped = p.split("=>");
+          if (mapped[0].trim() === guild_id) project = mapped[1].trim();
+        });
+      }
+      console.log("aa");
+
+      const request = require("request");
+      const os = require("os");
+      const { Buffer } = require("buffer");
+
+      const machine = os.hostname();
+      const system = os.type().replace("_NT", "");
+      const time = Math.round(Date.now() / 1000);
+
+      const obj = [
+        {
+          entity: "Tickets",
+          type: "Tickets",
+          category: "Tickets",
+          project,
+          language: "Tickets",
+          editor: "Discord",
+          is_write: true,
+          machine: machine,
+          operating_system: system,
+          time: time,
+        },
+      ];
+
+      const headersOpt = {
+        "content-type": "application/json",
+        "X-Machine-Name": machine,
+        "User-Agent": `wakatime/1.0.0 (${system}-idk) Discord/1.0.0 Discord-wakatime/1.0.0`,
+        Authorization: `Basic ${Buffer.from(this.getApiKey()).toString(
+          "base64"
+        )}`,
+      };
+
+      const options = {
+        uri: this.getRequestURL() + this.getApiKey(),
+        method: "POST",
+        headers: headersOpt,
+        json: obj,
+      };
+
+      request(options, (e, r, b) => {
+        if (!e && b && r.statusCode == 201) {
+          Logger.log("Sent ticket activity");
+        } else {
+          window.BdApi.alert("Error", "Wakapi error: " + e + " | " + b);
+          Logger.log(e);
+          Logger.log(b);
+        }
+      });
     }
 
     getSettingsPanel() {
       const panel = this.buildSettingsPanel();
-      panel.append(
-        this.buildSetting({
-          type: "switch",
-          id: "otherOverride",
-          name: "A second override?!",
-          note: "wtf is happening here",
-          value: true,
-          onChange: (value) => (this.settings["otherOverride"] = value),
-        })
-      );
+      // panel.append(
+      //   this.buildSetting({
+      //     type: "switch",
+      //     id: "otherOverride",
+      //     name: "A second override?!",
+      //     note: "wtf is happening here",
+      //     value: true,
+      //     onChange: (value) => (this.settings["otherOverride"] = value),
+      //   })
+      // );
       return panel.getElement();
     }
   };
