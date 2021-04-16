@@ -30,18 +30,22 @@ The sample rate is the amount of seconds that pass between each heartbeat that i
 ## Development
 
 - Clone the repository
-```console
-git clone https://github.com/LoneDev6/Wakapi-Discord.git
-```
+    ```console
+    git clone https://github.com/LoneDev6/Wakapi-Discord.git
+    ```
 
 - Initialize your dev environment
-```console
-npm run dev:init
-``` 
+    ```console
+    npm run dev:init
+    ``` 
 
-- Do all your changes inside of ./plugins/Wakapi
+- Make all of your changes inside of ./plugins/Wakapi
 
 - To build the plugin, run 
-```console
-npm run dev:build
-```
+    ```console
+    npm run dev:build
+    ```
+
+### Branches
+- `main` => Code thats running in production. Don't touch!
+- `develop` => Dev branch. Use this to make pull requests against.
