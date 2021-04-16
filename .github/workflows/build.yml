@@ -16,7 +16,7 @@ jobs:
         with:
           node-version: "14.x"
       - name: Setup dev environment
-        run: "npm run dev:init"
+        run: "npm run dev:init:remote"
       - name: Build plugin
         run: "npm run dev:build"
       - name: Commit Changes
