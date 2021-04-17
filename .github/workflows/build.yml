@@ -19,10 +19,12 @@ jobs:
         run: "npm run dev:init:remote"
       - name: Build plugin
         run: "npm run dev:build"
-      - name: Commit Changes
-        uses: EndBug/add-and-commit@v7
-        with:
-          author_name: github-actions
-          author_email: 41898282+github-actions[bot]@users.noreply.github.com
-          message: "ci (build): $GITHUB_SHA"
-          add: "*.js"
+      - name: Commit and push Changes
+        run: |
+          git config user.email "actions@github.com"
+          git config user.name "GitHub Actions"
+          git add .
+          git diff --staged --quiet || git commit -m "ci (build): $GITHUB_SHA"
+          git checkout develop
+          git merge main
+          git push --all
