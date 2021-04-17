@@ -129,7 +129,6 @@ module.exports = (Plugin, Library) => {
             "Error",
             "Wakapi error: " + b.toString() + " | " + e.toString()
           );
-          Logger.err(r);
           Logger.err(e);
           Logger.err(b);
         }
