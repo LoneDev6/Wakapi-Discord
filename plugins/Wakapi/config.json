@@ -16,6 +16,7 @@
       }
     ],
     "version": "0.0.2",
+    "invite": "n4WfXaWNQc",
     "description": "Enables Wakapi time tracking of time spent in support channels.",
     "updateUrl": "https://raw.githubusercontent.com/LoneDev6/Wakapi-Discord/main/release/Wakapi.plugin.js",
     "github": "https://github.com/LoneDev6/Wakapi-Discord#readme",
