@@ -5,8 +5,8 @@
   "main": "config.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev:init:local": "git clone https://github.com/rauenzi/BDPluginLibrary.git && cp config.local.json ./BDPluginLibrary && mv ./BDPluginLibrary/config.local.json ./BDPluginLibrary/config.json",
-    "dev:init:remote": "git clone https://github.com/rauenzi/BDPluginLibrary.git && cp config.remote.json ./BDPluginLibrary && mv ./BDPluginLibrary/config.remote.json ./BDPluginLibrary/config.json",
+    "dev:init:local": "git clone https://github.com/rauenzi/BDPluginLibrary.git && node scripts/generateConfig.js local",
+    "dev:init:remote": "git clone https://github.com/rauenzi/BDPluginLibrary.git && node scripts/generateConfig.js",
     "dev:build": "node ./BDPluginLibrary/scripts/build.js local Wakapi"
   },
   "repository": {
