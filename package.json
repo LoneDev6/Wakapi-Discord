@@ -19,5 +19,8 @@
   "bugs": {
     "url": "https://github.com/LoneDev6/Wakapi-Discord/issues"
   },
-  "homepage": "https://github.com/LoneDev6/Wakapi-Discord#readme"
+  "homepage": "https://github.com/LoneDev6/Wakapi-Discord#readme",
+  "devDependencies": {
+    "request": "^2.88.2"
+  }
 }

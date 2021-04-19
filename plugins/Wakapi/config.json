@@ -55,7 +55,7 @@
       "id": "wakapi",
       "name": "Wakapi Settings",
       "collapsible": true,
-      "shown": false,
+      "shown": true,
       "settings": [
         {
           "type": "textbox",
@@ -89,28 +89,21 @@
       "id": "discord",
       "name": "Discord Settings",
       "collapsible": true,
-      "shown": false,
+      "shown": true,
       "settings": [
         {
           "type": "textbox",
-          "id": "trackingguilds",
-          "name": "Tracking Guilds",
-          "note": "The guild(s) in which you want to track your time. IDs! For multiple guilds, just seperate the guild IDs by comma. If left empty the plugin tracks the time on all guilds.",
+          "id": "categories",
+          "name": "Category ID",
+          "note": "Put the category ID that indicate a support category and trigger the time tracking action here. For more than one just separate them by comma.",
           "placeholder": "1234567891011, 1110987654321",
           "value": ""
         },
         {
           "type": "textbox",
-          "id": "categories",
-          "name": "Category Names",
-          "note": "Put the category names that indicate a support category and trigger the time tracking action here. For more than one just seperate them by comma.",
-          "value": "tickets, support"
-        },
-        {
-          "type": "textbox",
           "id": "projectmapping",
           "name": "Project Mapping",
-          "note": "If you want to map the tracked guilds to a certain project, put them in here like so: {GUILID} => {PROJECTNAME}. If left empty, the project shown in wakapi will be \"tickets\".",
+          "note": "If you want to map the tracked categories to a certain project, put them in here like so: {CATEGORYID} => {PROJECTNAME}. If left empty, the project shown in wakapi will be \"Tickets\".",
           "placeholder": "1234567891011 => ExampleProject, 1110987654321 => ProjectExample",
           "value": ""
         }

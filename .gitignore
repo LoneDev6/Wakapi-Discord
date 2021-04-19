@@ -1,2 +1,6 @@
-config.js
+/.idea/
+/node_modules/
+/release/
+/package-lock.json
 /BDPluginLibrary
+config.js
