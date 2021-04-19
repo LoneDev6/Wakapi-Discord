@@ -15,18 +15,16 @@ Time spent in support tickets will be logged under the language _"Tickets"_.
 
 ### Wakapi Settings
 
-![](./assets/apikey_and_token.png)
+![](https://i.imgur.com/gJ7EGC7.png)
 
 Fill in you Wakapi API Key and Url in these fields. If you supply no API Key, the plugin won't start.
 
 The sample rate is the amount of seconds that pass between each heartbeat that is sent to Wakapi.
 ### Discord Settings
-![](./assets/discord_settings.png)
+![](https://i.imgur.com/zOGqUe9.png)
 
-1. Place the ID of the server in where you want to track your ticket time in here. For multiple guilds, just seperate the IDs by comma.
-2. These are the names of the categories in which you want to track your time. If your tickets are under the "support" categoiry, you would have to put "support" here. Mulitple value allowed.
-
-3. Project mapping. If you want to map the time spent in a tracked guild to a project, put the id in this text area followed by `=>` and the projectname. As with all other settigs, you can enter multiple values, seperated by comma
+1. Place the ID of the channels category you want to track (the tickets category for example). You can add multiple categories separated by a comma.
+2. (OPTIONAL) If you want to map the time spent in a tracked category to a project, put the id in this text area followed by `=>` and the projectname. You can add multiple categories separated by a comma.
 
 
 ## Development
