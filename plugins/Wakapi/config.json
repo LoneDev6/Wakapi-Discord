@@ -102,7 +102,7 @@
         {
           "type": "textbox",
           "id": "projectmapping",
-          "name": "Project Mapping",
+          "name": "(OPTIONAL) Project Mapping",
           "note": "If you want to map the tracked categories to a certain project, put them in here like so: {CATEGORYID} => {PROJECTNAME}. If left empty, the project shown in wakapi will be \"Tickets\".",
           "placeholder": "1234567891011 => ExampleProject, 1110987654321 => ProjectExample",
           "value": ""
