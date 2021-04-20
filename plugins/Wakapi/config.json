@@ -15,7 +15,7 @@
         "github_username": "MeerBiene"
       }
     ],
-    "version": "0.0.2",
+    "version": "0.0.3",
     "invite": "n4WfXaWNQc",
     "website": "https://github.com/LoneDev6/Wakapi-Discord#readme",
     "description": "Enables Wakatime tracking of time spent in support channels.",
@@ -25,8 +25,11 @@
   },
   "changelog": [
     {
-      "title": "Sample Rate",
-      "items": ["add smaple rate setting for less network usage"]
+      "title": "Tracking Settings",
+      "items": [
+        "change tracking settings from guild id to category id, in order to allow multiple projets mapped in one guild",
+        "Change projectmapping to now map {CATEGORY ID} => {PROJECTNAME}",
+       ]
     },
     {
       "title": "Settings",
