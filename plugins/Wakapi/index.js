@@ -1,10 +1,8 @@
 module.exports = (Plugin, Library) => {
-    const {Logger} = Library;
+    const { Logger } = Library;
 
-    return class Wakapi extends Plugin
-    {
-        onStart()
-        {
+    return class Wakapi extends Plugin {
+        onStart() {
             if (this.settings.enabled === false)
                 return;
             if (this.settings.wakapi.apikey === "")
@@ -31,25 +29,21 @@ module.exports = (Plugin, Library) => {
             }, this.settings.wakapi.samplerate * 1000);
         }
 
-        onStop()
-        {
+        onStop() {
             Logger.log("Stopped");
             window.removeEventListener("focus", this.focus);
             window.removeEventListener("blur", this.unfocus);
         }
 
-        onMessage()
-        {
+        onMessage() {
             this.trySendHeartbeat();
         }
 
-        onSwitch()
-        {
+        onSwitch() {
             this.trySendHeartbeat();
         }
 
-        trySendHeartbeat()
-        {
+        trySendHeartbeat() {
             if (this.settings.enabled !== true)
                 return;
             if (this.settings.wakapi.apikey === "")
@@ -85,8 +79,7 @@ module.exports = (Plugin, Library) => {
             if (
                 this.settings.discord.projectmapping !== "" &&
                 this.settings.discord.projectmapping.includes(category_id)
-            )
-            {
+            ) {
                 let projects = this.settings.discord.projectmapping.includes(",")
                     ? this.settings.discord.projectmapping.split(",")
                     : [this.settings.discord.projectmapping];
@@ -100,7 +93,7 @@ module.exports = (Plugin, Library) => {
 
             const request = require("request");
             const os = require("os");
-            const {Buffer} = require("buffer");
+            const { Buffer } = require("buffer");
 
             const machine = os.hostname();
             const system = os.type().replace("_NT", "");
@@ -110,9 +103,9 @@ module.exports = (Plugin, Library) => {
                 {
                     entity: "Tickets",
                     type: "Tickets",
-                    category: "Tickets",
-                    language: "Tickets",
-                    editor: "Discord",
+                    category: this.settings.tickets.category !== "" ? this.settings.tickets.category : "Tickets",
+                    language: this.settings.tickets.language !== "" ? this.settings.tickets.language : "Tickets",
+                    editor: this.settings.tickets.editor !== "" ? this.settings.tickets.editor : "Discord",
                     is_write: true,
                     machine: machine,
                     operating_system: system,
@@ -138,12 +131,10 @@ module.exports = (Plugin, Library) => {
             };
 
             request(options, (e, r, b) => {
-                if (!e && b && r.statusCode === 201)
-                {
+                if (!e && b && r.statusCode === 201) {
                     Logger.log("Sent ticket activity");
                 }
-                else
-                {
+                else {
                     window.BdApi.alert(
                         "Error",
                         "Wakapi error: " + b.toString() + " | " + e.toString()
@@ -154,8 +145,7 @@ module.exports = (Plugin, Library) => {
             });
         }
 
-        getSettingsPanel()
-        {
+        getSettingsPanel() {
             const panel = this.buildSettingsPanel();
             return panel.getElement();
         }
