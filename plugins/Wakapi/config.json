@@ -28,8 +28,8 @@
       "title": "Tracking Settings",
       "items": [
         "change tracking settings from guild id to category id, in order to allow multiple projets mapped in one guild",
-        "Change projectmapping to now map {CATEGORY ID} => {PROJECTNAME}",
-       ]
+        "Change projectmapping to now map {CATEGORY ID} => {PROJECTNAME}"
+      ]
     },
     {
       "title": "Settings",
@@ -74,6 +74,7 @@
           "note": "API Url where your Wakapi instance lives",
           "value": "https://wakapi.dev/api/heartbeat"
         },
+
         {
           "type": "slider",
           "id": "samplerate",
@@ -84,6 +85,36 @@
           "max": 240,
           "markers": [30, 60, 90, 120, 150, 180, 210, 240],
           "stickToMarkers": true
+        }
+      ]
+    },
+    {
+      "type": "category",
+      "id": "tickets",
+      "name": "More Ticket Settings",
+      "collapsible": true,
+      "shown": true,
+      "settings": [
+        {
+          "type": "textbox",
+          "id": "language",
+          "name": "Wakapi Language",
+          "note": "Set the language under which your ticket activity is registered. If left empty, language will default to \"Tickets\"",
+          "value": ""
+        },
+        {
+          "type": "textbox",
+          "id": "category",
+          "name": "Wakapi Category",
+          "note": "Set the category that is used for your ticket activity. If left empty, category will default to \"Tickets\"",
+          "value": ""
+        },
+        {
+          "type": "textbox",
+          "id": "editor",
+          "name": "Wakapi Editor",
+          "note": "Set the editor under which your time will be shown. If left empty, editor will default to \"Discord\"",
+          "value": ""
         }
       ]
     },
