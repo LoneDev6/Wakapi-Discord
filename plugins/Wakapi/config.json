@@ -15,7 +15,7 @@
         "github_username": "MeerBiene"
       }
     ],
-    "version": "0.0.3",
+    "version": "0.0.4",
     "invite": "n4WfXaWNQc",
     "website": "https://github.com/LoneDev6/Wakapi-Discord#readme",
     "description": "Enables Wakatime tracking of time spent in support channels.",
@@ -26,23 +26,9 @@
   "changelog": [
     {
       "title": "Tracking Settings",
-      "items": [
-        "change tracking settings from guild id to category id, in order to allow multiple projets mapped in one guild",
-        "Change projectmapping to now map {CATEGORY ID} => {PROJECTNAME}"
-      ]
-    },
-    {
-      "title": "Settings",
-      "items": [
-        "added general settings",
-        "added discord settings to enable what channel names on which guilds are tracked"
-      ]
-    },
-    {
-      "title": "Tracking on other guilds",
       "type": "fixed",
       "items": [
-        "Fixed bug where the plugin tracked time spent in support channels on other guilds"
+        "Tracking not actually being disabled when disabled in settings"
       ]
     }
   ],
@@ -93,7 +79,7 @@
       "id": "tickets",
       "name": "More Ticket Settings",
       "collapsible": true,
-      "shown": true,
+      "shown": false,
       "settings": [
         {
           "type": "textbox",
